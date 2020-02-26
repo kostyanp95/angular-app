@@ -1,0 +1,25 @@
+
+<th scope="row" class="text-center"> {{ user.id }} </th>
+<td class="text-center"> {{ user.first_name }} </td>
+<td class="text-center"> {{ user.last_name }} </td>
+<td class="text-center"> {{ user.email }} </td>
+<td class="text-center"> <img class="avatar" src="{{ user.avatar }}" alt="avatar"> </td>
+<td class="text-center">
+    <div class="d-flex flex-lg-row flex-column align-items-center justify-content-center">
+        <button
+            type="button"
+            class="btn btn-outline-primary"
+            data-toggle="modal" data-target="#changeModal"
+            (click)="changeActiveUser()"
+        >
+            Change
+        </button>
+        <button 
+            type="button" 
+            class="btn btn-outline-danger ml-lg-2 mt-lg-0 mt-2" 
+            (click)="removeUser()"
+        >
+            Delete
+        </button>
+    </div>
+</td>
