@@ -1,0 +1,65 @@
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h4 class="modal-title" id="createModalLabel">Creating a new user</h4>
+          <button 
+            type="button" 
+            class="close" 
+            data-dismiss="modal" 
+            aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form 
+          >
+          <!-- [formGroup]="creatingForm" 
+          (ngSubmit)="submit()" -->
+          <div class="form-group">
+              <label >First name</label>
+              <input 
+                  class="form-control" 
+                  [(ngModel)]="userFirstName"
+                  name="userFirstName"  >
+                  <!-- formControlName="creatingFirstName" -->
+          </div>          
+          <div class="form-group">
+              <label >Last name</label>
+              <input 
+                  class="form-control" 
+                  [(ngModel)]="userLastName"
+                  name="userLastName"  >
+                  <!-- formControlName="creatingLastName" -->
+          </div>
+          <div class="form-group">
+              <label>Email address</label>
+              <input 
+                  class="form-control" 
+                  [(ngModel)]="userEmail"
+                  name="userEmail"  type="email" >
+                  
+                  <!-- formControlName="creatingEmail" -->
+          </div>
+          <div class="modal-footer">
+              <button 
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button 
+                type="submit"
+                class="btn btn-success"
+                data-dismiss="modal"
+                (click)="addUser()"
+              >
+                Create a new user
+              </button>
+          </div>
+        </form>
+      </div>          
+    </div>
+  </div>
+</div>
