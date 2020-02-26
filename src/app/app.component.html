@@ -1,0 +1,54 @@
+<div class="container">
+  <h1 class="text-center mb-5">Angular Test App</h1>
+  <div class="row">
+    
+    <div class="app-header d-flex flex-column ml-auto mr-auto">
+      <h3 class="text-center">List of users</h3>
+      <div class="d-flex mt-2">
+        <button type="button" class="btn btn-success ml-4" data-toggle="modal" data-target="#createModal">
+          Add a new user!
+        </button>
+        <p class="ml-4">or click to</p>
+        <button type="button" class="btn btn-primary ml-4" (click)="ngOnInit()">
+          Get users again!
+        </button>
+      </div>
+      <div *ngIf="!loading; else loadingBlock"></div> 
+      <ng-template #loadingBlock>
+        <p class="alert alert-warning alert-dismissible fade show text-center mt-4" role="alert">
+          <strong> Loading, </strong> please, wait...
+        </p>  
+      </ng-template>
+    </div>
+    
+    <app-creating-user (onAdd)="addUser($event)">
+    </app-creating-user>
+
+    <app-editing-user (onEdit)="editActiveUser($event)">
+    </app-editing-user>
+
+    <table class="table table-hover mt-5">   
+      <thead>
+        <tr>
+          <th scope="col" class="text-center">ID</th>
+          <th scope="col" class="text-center">First Name</th>
+          <th scope="col" class="text-center">Last Name</th>
+          <th scope="col" class="text-center">Email</th>
+          <th scope="col" class="text-center">Avatar</th>
+          <th scope="col" class="text-center">Edit User</th>
+        </tr>
+      </thead>
+      <tbody>
+        <app-user 
+          *ngFor="let user of users"
+          [user]="user"
+          (onRemove)="removeUser($event)"
+          (onEdit)="changeActiveUser($event)"
+        >
+        </app-user>
+      </tbody> 
+    </table>   
+    
+  </div>   <!-- end .row -->
+
+</div> <!-- end .container -->

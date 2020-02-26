@@ -1,0 +1,14 @@
+p {
+  font-size: 1.5rem;
+}
+
+app-user {
+  display: table-row;
+  vertical-align: inherit;
+  border-color: inherit;
+}
+
+.table-hover tbody app-user:hover {
+  color: #212529;
+  background-color: rgba(0,0,0,.075);
+}
