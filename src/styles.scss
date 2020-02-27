@@ -1,3 +1,25 @@
 .table td, .table th {
     vertical-align: middle!important;
 }
+
+input {
+    &.ng-invalid.ng-touched {
+        border-color: #dc3545;
+        box-shadow: 0 0 0 0.2rem #dc3545;
+    }
+
+    &.ng-valid.ng-touched {
+        border-color: #28a745;
+        box-shadow: 0 0 0 0.2rem #28a745;
+    }
+}
+
+.validation small {
+    color: red;
+    font-weight: bold;
+}
+
+small b {
+    text-decoration: underline;
+    font-weight: bolder;
+}
