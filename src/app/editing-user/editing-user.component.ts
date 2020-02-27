@@ -3,7 +3,9 @@ import {
   OnInit,
   Output,
   EventEmitter } from '@angular/core';
-  import { User } from '../app.component';
+import { User } from '../app.component';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
+declare var $: any
 
 @Component({
   selector: 'app-editing-user',
@@ -13,27 +15,31 @@ import {
 
 export class EditingUserComponent implements OnInit {
 
-  // @Input() user: User
   @Output() onEdit: EventEmitter<User> = new EventEmitter<User>()
 
-  editEmail = ''
-  editFirstName = ''
-  editLastName = ''
+  changeForm: FormGroup
 
-  ngOnInit():void { }
+  ngOnInit() { 
+    this.changeForm = new FormGroup ({ 
+      email: new FormControl('', [
+        Validators.email, 
+        Validators.required ]),
+      first_name: new FormControl('', [
+        Validators.required ]),
+      last_name: new FormControl('', [
+        Validators.required
+      ])
+    })
+  }  
 
   changeUser() {
-    if (this.editFirstName.trim() && this.editLastName.trim() && this.editEmail.trim()) {
-      const editUser: User = {
-        email: this.editEmail,
-        first_name: this.editFirstName,
-        last_name: this.editLastName
-      }
-
-      console.log('Edited User: ', editUser)
-
-      this.onEdit.emit(editUser)
-      this.editEmail = this.editFirstName = this.editLastName = ''      
+    if (this.changeForm.valid) {
+      console.log('Form submited: ', this.changeForm)
+      const edittUser = {...this.changeForm.value}
+      console.log('New User Created: ', edittUser)  
+      this.onEdit.emit(edittUser)
+      this.changeForm.reset()
+      $('#changeModal').modal('hide')
     }
   }  
 }
