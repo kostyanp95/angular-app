@@ -1,5 +1,5 @@
-<div class="modal fade" id="changeModal" tabindex="-1" role="dialog" aria-labelledby="changeModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<div class="modal fade" id="changeModal" aria-labelledby="changeModalLabel">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="changeModalLabel">Change a user</h4>
@@ -8,51 +8,74 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form
+          id="changeForm"
+          [formGroup]="changeForm" 
+          (ngSubmit)="changeUser()"
+        >
           <div class="form-group">
               <label>Change first name</label>
               <input 
                 class="form-control" 
-                [(ngModel)]="editFirstName" 
-                name="editFirstName"
+                formControlName="first_name" required
               >
+              <div class="validation" 
+                *ngIf="changeForm.get('first_name').invalid && changeForm.get('first_name').touched"
+              >
+                <small>       
+                  Edit first name
+                </small>
+              </div>
           </div>          
           <div class="form-group">
               <label>Change last name</label>
               <input 
                 class="form-control" 
-                [(ngModel)]="editLastName" 
-                name="editLastName"
+                formControlName="last_name" required
               >
+              <div class="validation"      
+                *ngIf="changeForm.get('last_name').invalid && changeForm.get('last_name').touched"          
+              >
+                <small>
+                  Edit last name
+                </small>
+              </div>
           </div>
           <div class="form-group">
-              <label for="exampleInputEmail1">Change email address</label>
-              <input 
+              <label>Change email address</label>
+              <input
                 class="form-control" 
-                [(ngModel)]="editEmail" 
-                aria-describedby="emailHelp" 
-                name="editEmail" type="email"
+                formControlName="email" type="email" required
               >
+              <div class="validation"
+                *ngIf="changeForm.get('email').invalid && changeForm.get('email').touched"        
+              >
+                <small *ngIf="changeForm.get('email').errors.required">
+                  Edit your email address
+                </small>
+                <small *ngIf="changeForm.get('email').errors.email">
+                  Enter <b>correct</b> email address
+                </small>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button 
+              type="button" 
+              class="btn btn-secondary" 
+              data-dismiss="modal"
+            >
+                Close
+            </button>
+            <button 
+              type="submit" 
+              class="btn btn-primary"               
+              [disabled]="changeForm.invalid"
+            >
+              Change a user
+            </button>
           </div>
         </form>
-      </div>
-      <div class="modal-footer">
-          <button 
-            type="button" 
-            class="btn btn-secondary" 
-            data-dismiss="modal"
-          >
-              Close
-          </button>
-          <button 
-            type="submit" 
-            class="btn btn-success" 
-            data-dismiss="modal" 
-            (click)="changeUser()"
-          >
-            Change a user
-          </button>
-      </div>
+      </div>      
     </div>
   </div>
 </div>

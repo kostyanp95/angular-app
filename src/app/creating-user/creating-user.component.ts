@@ -4,7 +4,8 @@ import {
   Output,
   EventEmitter } from '@angular/core';
 import { User } from '../app.component';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+declare var $: any
 
 @Component({
   selector: 'app-creating-user',
@@ -13,35 +14,32 @@ import { FormGroup } from '@angular/forms';
 })
 
 export class CreatingUserComponent implements OnInit {
-  
+
   @Output() onAdd: EventEmitter<User> = new EventEmitter<User>()
 
-  userEmail = ''
-  userFirstName = ''
-  userLastName = ''
+  creatingForm: FormGroup
 
   ngOnInit() { 
-
-  }  
-
-  addUser() {
-    if (this.userFirstName.trim() && this.userLastName.trim() && this.userEmail.trim()) {
-      const newUser: User = {  
-        id: 0,    
-        email: this.userEmail,
-        first_name: this.userFirstName,
-        last_name: this.userLastName,
-        avatar: ''
-      }
-    
-      console.log('New User Created: ', newUser)
-
-      this.onAdd.emit(newUser)
-      this.userEmail = this.userFirstName = this.userLastName = ''
-    }
+    this.creatingForm = new FormGroup ({ 
+      email: new FormControl('', [
+        Validators.email, 
+        Validators.required ]),
+      first_name: new FormControl('', [
+        Validators.required ]),
+      last_name: new FormControl('', [
+        Validators.required
+      ])
+    })
   }
 
-  // submit() {
-
-  // }
+  addUser() {
+    if (this.creatingForm.valid) {     
+      console.log('Form submited: ', this.creatingForm)
+      const newUser = {...this.creatingForm.value}          
+      console.log('New User Created: ', newUser)  
+      this.onAdd.emit(newUser)
+      this.creatingForm.reset()
+      $('#createModal').modal('hide')
+    }
+  }
 }
