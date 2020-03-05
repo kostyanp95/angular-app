@@ -29,7 +29,7 @@ export class CreatingUserComponent implements OnInit {
       last_name: new FormControl('', [
         Validators.required
       ]),
-      avatar: new FormControl('https://avatars2.githubusercontent.com/u/51831069?s=460&v=4://', [ ])
+      avatar: new FormControl('https://avatars2.githubusercontent.com/u/51831069?s=460&v=4://')
     })
   }
 

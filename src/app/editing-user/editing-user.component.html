@@ -58,6 +58,21 @@
                 </small>
               </div>
           </div>
+          <div class="form-group">
+            <label >Avatar</label>
+            <input 
+              class="form-control" 
+              formControlName="avatar"
+              type="text" 
+            >
+            <div class="validation"
+              *ngIf="changeForm.get('avatar').invalid && changeForm.get('avatar').touched"          
+            >
+              <small>
+                Insert the link to the avatar
+              </small>
+            </div>
+           </div>
           <div class="modal-footer">
             <button 
               type="button" 

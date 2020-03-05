@@ -28,7 +28,8 @@ export class EditingUserComponent implements OnInit {
         Validators.required ]),
       last_name: new FormControl('', [
         Validators.required
-      ])
+      ]),
+      avatar: new FormControl('https://avatars2.githubusercontent.com/u/51831069?s=460&v=4://')
     })
   }  
 
@@ -39,6 +40,12 @@ export class EditingUserComponent implements OnInit {
       console.log('New User Created: ', edittUser)  
       this.onEdit.emit(edittUser)
       this.changeForm.reset()
+      this.changeForm.setValue({
+        email: '',
+        first_name: '',
+        last_name: '',
+        avatar: 'https://avatars2.githubusercontent.com/u/51831069?s=460&v=4://'
+      })
       $('#changeModal').modal('hide')
     }
   }  

@@ -82,6 +82,7 @@ export class AppComponent implements OnInit {
     modifiedUser.email = editUser.email
     modifiedUser.first_name = editUser.first_name
     modifiedUser.last_name = editUser.last_name
+    modifiedUser.avatar = editUser.avatar
 
     console.log('User a Changed: ', modifiedUser)
 
@@ -112,7 +113,7 @@ export class AppComponent implements OnInit {
       (response, time) => {     
        console.log('Get Response: ', response, `in ${time}ms`)
        if (response.token != '') {
-          console.log(`Check Ath Complete! In ${time}ms`)
+          console.log(`Check Auth Complete! In ${time}ms`)
           this.checkAuth = false
         }
       }
