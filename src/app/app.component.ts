@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
   users: User[] = []
   loading = false
   editId: number
+  checkAuth: boolean = true
 
   constructor(private http: HttpClient) { }
 
@@ -108,6 +109,24 @@ export class AppComponent implements OnInit {
       }
     )
 
+  loginUser(authUser: User) {
+    console.log('User Login Get: ', authUser)
+    this.checkAuth = true
+    this.observableTimer(
+      this.http.post<Object>('https://reqres.in/api/login', authUser),
+      (response, time) => {     
+       console.log('Get Response: ', response, `in ${time}ms`)
+       if (response.token != '') {
+          console.log(`Check Ath Complete! In ${time}ms`)
+          this.checkAuth = false
+        }
+      }
+    )
+  }
+  
+  logoutUser() {
+    this.checkAuth = true
+    console.log('Logout User, checkAuth = ', this.checkAuth)
   }
 
 }
