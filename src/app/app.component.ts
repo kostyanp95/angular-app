@@ -1,7 +1,6 @@
-import {Component, OnInit, Input} from '@angular/core'
+import {Component, OnInit} from '@angular/core'
 import {HttpClient} from '@angular/common/http'
 import {delay} from 'rxjs/operators'
-import {FormGroup} from '@angular/forms'
 
 export interface User {  
   id?: number
@@ -20,12 +19,12 @@ export interface User {
 export class AppComponent implements OnInit {
 
   users: User[] = []
-  loading = false
+  loading: boolean = false
   editId: number
   checkAuth: boolean = true
 
   constructor(private http: HttpClient) { }
-
+  
   observableTimer(observable, callback) {
     let time = Date.now()
     observable.subscribe(response => {
@@ -35,7 +34,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.loading = true
     this.observableTimer(
       this.http.get('https://reqres.in/api/users')
@@ -46,13 +44,10 @@ export class AppComponent implements OnInit {
         this.loading = false
       }
     )
-
   }
 
   addUser(newUser: User) {
-
     console.log('New User Get: ', newUser)
-
     this.observableTimer(
       this.http.post<Object>('https://reqres.in/api/users', newUser),
       (user, time) => {
@@ -60,47 +55,46 @@ export class AppComponent implements OnInit {
         console.log('Added in ',`${time}ms`, 'a new user', user)
       }
     )
-
   }
 
   changeActiveUser(id: number) {
-
     this.editId = id    
-    console.log(id)
-
+    console.log(`Active user ${id}`)
   }
 
   editActiveUser(editUser: User) {
     this.editUser(editUser, this.editId)
+    console.log(`Edit active user`, editUser, this.editId)
   }
 
   editUser(editUser: User, id:number) {    
-    
-    let users_index: number
-
+    let usersIndex: number
+    console.log('Users: ', this.users)
     this.users.forEach((u, index) => {
       if (u.id == id) {
-        users_index = index
+        usersIndex = index
       }
     })
+
+    console.log('EditUser Get: ', editUser)
     
-    let modifiedUser = this.users[users_index]
+    let modifiedUser = this.users[usersIndex]
+    modifiedUser.email = editUser.email
     modifiedUser.first_name = editUser.first_name
     modifiedUser.last_name = editUser.last_name
-    modifiedUser.email = editUser.email
+
+    console.log('User a Changed: ', modifiedUser)
 
     this.observableTimer(
       this.http.put<User>(`https://reqres.in/api/users/${id}`, modifiedUser),
       (response, time) => {
-        this.users[users_index] = response
-        console.log(`Edited user id ${response.id} in ${time}ms`)
+        this.users[usersIndex] = response
+        console.log('Edited user ', modifiedUser, `in ${time}ms`)
       }
     )
-
   }
 
   removeUser(id: number) {
-
     this.observableTimer(
       this.http.delete<void>(`https://reqres.in/api/users/${id}`),
       (response, time) => {
@@ -108,6 +102,7 @@ export class AppComponent implements OnInit {
         console.log(`Deleted in ${time}ms user id ${id}`)
       }
     )
+  }
 
   loginUser(authUser: User) {
     console.log('User Login Get: ', authUser)
