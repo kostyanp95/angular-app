@@ -2,17 +2,47 @@
   <h1 class="text-center mb-5">Angular Test App</h1>
   <div class="row">
     
-    <div class="app-header d-flex flex-column ml-auto mr-auto">
-      <h3 class="text-center">List of users</h3>
+    <div class="app-header d-flex flex-column ml-auto mr-auto">      
+      <h3 class="text-center">List of users</h3>      
+      <div class="d-flex  justify-content-center align-items-center">
+        <button 
+          type="button" 
+          class="btn btn-warning" 
+          data-toggle="modal" 
+          data-target="#loginModal"
+        >
+          Login
+        </button>
+        <button 
+          type="button" 
+          class="btn btn-danger ml-4"
+          (click)="logoutUser()"          
+          [disabled]="checkAuth"
+        >
+          Logout
+        </button>
+      </div>
       <div class="d-flex mt-2">
-        <button type="button" class="btn btn-success ml-4" data-toggle="modal" data-target="#createModal">
+        <button 
+          type="button" 
+          class="btn btn-success ml-4"
+          data-toggle="modal" 
+          data-target="#createModal"
+          [disabled]="checkAuth"
+        >
           Add a new user!
         </button>
         <p class="ml-4">or click to</p>
-        <button type="button" class="btn btn-primary ml-4" (click)="ngOnInit()">
+        <button 
+          type="button" 
+          class="btn btn-info ml-4" 
+          (click)="ngOnInit()"
+          [disabled]="checkAuth"
+        >
           Get users again!
         </button>
       </div>
+      
       <div *ngIf="!loading; else loadingBlock"></div> 
       <ng-template #loadingBlock>
         <p class="alert alert-warning alert-dismissible fade show text-center mt-4" role="alert">
@@ -20,6 +50,8 @@
         </p>  
       </ng-template>
     </div>
+
+    <app-auth-user (onAuth)="loginUser($event)"></app-auth-user>
     
     <app-creating-user (onAdd)="addUser($event)">
     </app-creating-user>
@@ -42,6 +74,7 @@
         <app-user 
           *ngFor="let user of users"
           [user]="user"
+          [checkAuth]="!checkAuth"
           (onRemove)="removeUser($event)"
           (onEdit)="changeActiveUser($event)"
         >

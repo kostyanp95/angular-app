@@ -1,0 +1,71 @@
+<div class="modal fade" id="loginModal" aria-labelledby="loginModalLabel">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" id="loginModalLabel">Sign in</h4>
+            <button 
+              type="button" 
+              class="close" 
+              data-dismiss="modal" 
+              aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form 
+            id="loginForm"
+            [formGroup]="loginForm" 
+            (ngSubmit)="loginUser()"
+          >            
+            <div class="form-group">
+                <label>Email address</label>
+                <input 
+                class="form-control" 
+                formControlName="email" type="email" required
+                >
+                <div class="validation"
+                *ngIf="loginForm.get('email').invalid && loginForm.get('email').touched"        
+                >
+                <small *ngIf="loginForm.get('email').errors.required">
+                    Enter your email address
+                </small>
+                <small *ngIf="loginForm.get('email').errors.email">
+                    Enter <b>correct</b> email address
+                </small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label >Password</label>
+                <input 
+                  class="form-control" 
+                  formControlName="password" type="text" required
+                >
+                <div class="validation" 
+                  *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched"
+                >
+                  <small>       
+                    Enter password
+                  </small>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button 
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button 
+                type="submit"
+                class="btn btn-warning"
+                [disabled]="loginForm.invalid"
+              >
+                Login
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
