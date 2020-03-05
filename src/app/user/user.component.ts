@@ -18,10 +18,15 @@ import {
 export class UserComponent implements OnInit {
   
   @Input() user: User
+  @Input() checkAuth: boolean
   @Output() onRemove: EventEmitter<number> = new EventEmitter<number>()
   @Output() onEdit: EventEmitter<number> = new EventEmitter<number>()
 
   ngOnInit(): void { }
+
+  ngOnChanges() {
+    this.checkAuth = !this.checkAuth
+  }
 
   removeUser() {
     this.onRemove.emit(this.user.id)
