@@ -28,7 +28,8 @@ export class CreatingUserComponent implements OnInit {
         Validators.required ]),
       last_name: new FormControl('', [
         Validators.required
-      ])
+      ]),
+      avatar: new FormControl('https://avatars2.githubusercontent.com/u/51831069?s=460&v=4://', [ ])
     })
   }
 
@@ -39,6 +40,12 @@ export class CreatingUserComponent implements OnInit {
       console.log('New User Created: ', newUser)  
       this.onAdd.emit(newUser)
       this.creatingForm.reset()
+      this.creatingForm.setValue({
+        email: '',
+        first_name: '',
+        last_name: '',
+        avatar: 'https://avatars2.githubusercontent.com/u/51831069?s=460&v=4://'
+      })
       $('#createModal').modal('hide')
     }
   }
