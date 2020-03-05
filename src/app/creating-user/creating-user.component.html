@@ -27,7 +27,7 @@
                 *ngIf="creatingForm.get('first_name').invalid && creatingForm.get('first_name').touched"
               >
                 <small>       
-                  Enter your first name
+                  Enter first name
                 </small>
               </div>
           </div>
@@ -41,7 +41,7 @@
                 *ngIf="creatingForm.get('last_name').invalid && creatingForm.get('last_name').touched"          
               >
                 <small>
-                  Enter your last name
+                  Enter last name
                 </small>
               </div>
           </div>
@@ -55,13 +55,28 @@
                 *ngIf="creatingForm.get('email').invalid && creatingForm.get('email').touched"        
               >
                 <small *ngIf="creatingForm.get('email').errors.required">
-                  Enter your email address
+                  Enter email address
                 </small>
                 <small *ngIf="creatingForm.get('email').errors.email">
                   Enter <b>correct</b> email address
                 </small>
               </div>
           </div>
+          <div class="form-group">
+            <label >Avatar</label>
+            <input 
+              class="form-control" 
+              formControlName="avatar"
+              type="text" 
+            >
+            <div class="validation"      
+              *ngIf="creatingForm.get('avatar').invalid && creatingForm.get('avatar').touched"          
+            >
+              <small>
+                Insert the link to the avatar
+              </small>
+            </div>
+           </div>
           <div class="modal-footer">
             <button 
               type="button"
