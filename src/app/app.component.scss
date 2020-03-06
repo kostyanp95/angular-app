@@ -12,3 +12,16 @@ app-user {
   color: #212529;
   background-color: rgba(0,0,0,.075);
 }
+
+.wrap_toasts {
+  position: relative; 
+  min-height: 200px;
+  
+  .toasts {
+    position: fixed; 
+    top: 15; 
+    left: 50; 
+    z-index: 1000;
+  }
+}
+
