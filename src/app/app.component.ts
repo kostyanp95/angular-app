@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core'
+import {Component, OnInit, Output, EventEmitter} from '@angular/core'
 import {HttpClient} from '@angular/common/http'
 import {delay} from 'rxjs/operators'
+declare var $: any
 
 export interface User {  
   id?: number
@@ -23,13 +24,17 @@ export class AppComponent implements OnInit {
   editId: number
   checkAuth: boolean = true
 
+  time: number
+  id: number
+  status: string
+  
   constructor(private http: HttpClient) { }
   
   observableTimer(observable, callback) {
-    let time = Date.now()
+    this.time = Date.now()
     observable.subscribe(response => {
-      time = Date.now() - time
-      callback(response, time)
+      this.time = (Date.now() - this.time) / 1000
+      callback(response, this.time)
     })
   }
 
@@ -39,9 +44,10 @@ export class AppComponent implements OnInit {
       this.http.get('https://reqres.in/api/users')
         .pipe(delay(2000)),
       (response, time) => {
-        console.log('Response get in ', `${time}ms`, response)
+        this.status = 'The table of users is received'
         this.users = response.data
         this.loading = false
+        this.showToasts(time, this.status)
       }
     )
   }
@@ -52,14 +58,16 @@ export class AppComponent implements OnInit {
       this.http.post<Object>('https://reqres.in/api/users', newUser),
       (user, time) => {
         this.users.unshift(user)
-        console.log('Added in ',`${time}ms`, 'a new user', user)
+        this.status = `New user with id ${user.id} added`
+        this.showToasts(time, status)
       }
     )
   }
 
   changeActiveUser(id: number) {
-    this.editId = id    
-    console.log(`Active user ${id}`)
+    this.editId = id
+    this.status = `CuThe current user with the id ${id}`
+    this.showToasts(this.time, status)
   }
 
   editActiveUser(editUser: User) {
@@ -90,7 +98,9 @@ export class AppComponent implements OnInit {
       this.http.put<User>(`https://reqres.in/api/users/${id}`, modifiedUser),
       (response, time) => {
         this.users[usersIndex] = response
-        console.log('Edited user ', modifiedUser, `in ${time}ms`)
+        console.log('Edited user ', modifiedUser)
+        this.status = `The user with id ${id} changed`
+        this.showToasts(time, status)
       }
     )
   }
@@ -100,7 +110,8 @@ export class AppComponent implements OnInit {
       this.http.delete<void>(`https://reqres.in/api/users/${id}`),
       (response, time) => {
         this.users = this.users.filter( u => u.id !== id)
-        console.log(`Deleted in ${time}ms user id ${id}`)
+        this.status = `The user id ${id} deleted`
+        this.showToasts(time, status)
       }
     )
   }
@@ -113,8 +124,9 @@ export class AppComponent implements OnInit {
       (response, time) => {     
        console.log('Get Response: ', response, `in ${time}ms`)
        if (response.token != '') {
-          console.log(`Check Auth Complete! In ${time}ms`)
           this.checkAuth = false
+          this.status = 'Authentication passed!'
+          this.showToasts(time, status)
         }
       }
     )
@@ -122,7 +134,20 @@ export class AppComponent implements OnInit {
   
   logoutUser() {
     this.checkAuth = true
-    console.log('Logout User, checkAuth = ', this.checkAuth)
+    this.status = 'You are logout...'
+    this.time = 0
+    $('.toast').toast('show')
   }
+
+  showToasts(time: number, status: string) {
+    // $('.toast').on('show.bs.toast', function () {       
+    // })
+    $('.toast').toast('show')
+  }
+
+  // ifLogout() {
+  //   this.status = 'Please, login in system.'
+  // $('.toast').toast('show')
+  // }
 
 }
