@@ -1,28 +1,42 @@
 <div class="container">
   <h1 class="text-center mb-5">Angular Test App</h1>
   <div class="row">
+
+    <div 
+      class="wrap_toasts"
+      aria-live="polite" 
+      aria-atomic="true" 
+    >      
+      <div class="wrap_toasts toasts">
+        <app-toasts
+          [toastsTime]="time"
+          [toastsStatus]="status"
+        ></app-toasts>
+      </div>
+    </div>
     
     <div class="app-header d-flex flex-column ml-auto mr-auto">      
       <h3 class="text-center">List of users</h3>      
-      <div class="d-flex  justify-content-center align-items-center">
+      <div class="d-flex justify-content-center align-items-center mt-4">
         <button 
           type="button" 
           class="btn btn-warning" 
           data-toggle="modal" 
           data-target="#loginModal"
+          [disabled]="!checkAuth"
         >
           Login
         </button>
         <button 
           type="button" 
           class="btn btn-danger ml-4"
-          (click)="logoutUser()"          
+          (click)="logoutUser()"
           [disabled]="checkAuth"
         >
           Logout
         </button>
       </div>
-      <div class="d-flex mt-2">
+      <div class="d-flex mt-4">
         <button 
           type="button" 
           class="btn btn-success ml-4"
@@ -42,13 +56,14 @@
           Get users again!
         </button>
       </div>
-      
+
       <div *ngIf="!loading; else loadingBlock"></div> 
       <ng-template #loadingBlock>
-        <p class="alert alert-warning alert-dismissible fade show text-center mt-4" role="alert">
+        <p class="alert alert-warning alert-dismissible fade show text-center mt-4 text-center" role="alert">
           <strong> Loading, </strong> please, wait...
         </p>  
       </ng-template>
+      
     </div>
 
     <app-auth-user (onAuth)="loginUser($event)"></app-auth-user>
@@ -59,7 +74,7 @@
     <app-editing-user (onEdit)="editActiveUser($event)">
     </app-editing-user>
 
-    <table class="table table-hover mt-5">   
+    <table class="table table-hover mt-4">   
       <thead>
         <tr>
           <th scope="col" class="text-center">ID</th>
@@ -70,7 +85,7 @@
           <th scope="col" class="text-center">Edit User</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody>          
         <app-user 
           *ngFor="let user of users"
           [user]="user"
@@ -80,7 +95,7 @@
         >
         </app-user>
       </tbody> 
-    </table>   
+    </table>    
     
   </div>   <!-- end .row -->
 
