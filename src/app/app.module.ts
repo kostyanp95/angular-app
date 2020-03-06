@@ -7,7 +7,8 @@ import { AppComponent } from 'src/app/app.component';
 import { CreatingUserComponent } from './creating-user/creating-user.component';
 import { UserComponent } from './user/user.component';
 import { EditingUserComponent } from './editing-user/editing-user.component';
-import { AuthUserComponent } from './auth-user/auth-user.component'
+import { AuthUserComponent } from './auth-user/auth-user.component';
+import { ToastsComponent } from './toasts/toasts.component'
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { AuthUserComponent } from './auth-user/auth-user.component'
     CreatingUserComponent,
     UserComponent,
     EditingUserComponent,
-    AuthUserComponent
+    AuthUserComponent,
+    ToastsComponent
   ],
   imports: [
     BrowserModule,
