@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http'
 import {delay} from 'rxjs/operators'
 declare var $: any
 
-export interface User {  
+export interface User {
   id?: number
   email: string
   first_name: string
@@ -27,9 +27,9 @@ export class AppComponent implements OnInit {
   time: number
   id: number
   status: string
-  
+
   constructor(private http: HttpClient) { }
-  
+
   observableTimer(observable, callback) {
     this.time = Date.now()
     observable.subscribe(response => {
@@ -75,7 +75,7 @@ export class AppComponent implements OnInit {
     console.log(`Edit active user`, editUser, this.editId)
   }
 
-  editUser(editUser: User, id:number) {    
+  editUser(editUser: User, id:number) {
     let usersIndex: number
     console.log('Users: ', this.users)
     this.users.forEach((u, index) => {
@@ -85,7 +85,7 @@ export class AppComponent implements OnInit {
     })
 
     console.log('EditUser Get: ', editUser)
-    
+
     let modifiedUser = this.users[usersIndex]
     modifiedUser.email = editUser.email
     modifiedUser.first_name = editUser.first_name
@@ -121,7 +121,7 @@ export class AppComponent implements OnInit {
     this.checkAuth = true
     this.observableTimer(
       this.http.post<Object>('https://reqres.in/api/login', authUser),
-      (response, time) => {     
+      (response, time) => {
        console.log('Get Response: ', response, `in ${time}ms`)
        if (response.token != '') {
           this.checkAuth = false
@@ -131,7 +131,7 @@ export class AppComponent implements OnInit {
       }
     )
   }
-  
+
   logoutUser() {
     this.checkAuth = true
     this.status = 'You are logout...'
@@ -140,7 +140,7 @@ export class AppComponent implements OnInit {
   }
 
   showToasts(time: number, status: string) {
-    // $('.toast').on('show.bs.toast', function () {       
+    // $('.toast').on('show.bs.toast', function () {
     // })
     $('.toast').toast('show')
   }
